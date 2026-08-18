@@ -16,7 +16,6 @@ from diagrams.k8s.network import Service
 from diagrams.onprem.database import Postgresql
 from diagrams.saas.chat import Slack
 
-
 RenderFunc = Callable[[Path, str], Path]
 
 
@@ -102,7 +101,9 @@ def c4_context(filename: Path, outformat: str) -> Path:
 def custom_icon(filename: Path, outformat: str) -> Path:
     icon_path = Path(__file__).resolve().parents[2] / "resources" / "generic" / "blank" / "blank.png"
     with _diagram("Custom Icon", filename, outformat):
-        Custom("custom", str(icon_path), nodeid="custom_icon") >> Edge(label="wraps") >> EC2("target", nodeid="custom_target")
+        custom = Custom("custom", str(icon_path), nodeid="custom_icon")
+        target = EC2("target", nodeid="custom_target")
+        custom >> Edge(label="wraps") >> target
     return _output_path(filename, outformat)
 
 

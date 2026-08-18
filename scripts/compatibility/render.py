@@ -11,9 +11,9 @@ from importlib.metadata import version
 from pathlib import Path
 from typing import Callable
 
-import diagrams
 from PIL import Image
 
+import diagrams
 
 RenderFunc = Callable[[Path, str], Path]
 

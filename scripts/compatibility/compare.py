@@ -4,7 +4,6 @@ from typing import Any
 
 from PIL import Image, ImageChops, ImageStat
 
-
 Manifest = dict[str, Any]
 
 
@@ -81,7 +80,12 @@ def compare_manifests(
             continue
 
         if baseline_format in {"png", "jpg", "jpeg"}:
-            mean_delta = _mean_rgb_delta(_image_path(baseline, baseline_render), _image_path(candidate, candidate_render))
+            baseline_path = _image_path(baseline, baseline_render)
+            candidate_path = _image_path(candidate, candidate_render)
+            mean_delta = _mean_rgb_delta(
+                baseline_path,
+                candidate_path,
+            )
             if mean_delta > max_mean_pixel_delta:
                 errors.append(
                     f"case {case} mean RGB delta {mean_delta:.2f} exceeds threshold {max_mean_pixel_delta:.2f}"
