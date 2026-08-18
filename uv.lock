@@ -150,7 +150,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "graphviz", specifier = ">=0.13.2,<0.21.0" },
+    { name = "graphviz", specifier = ">=0.13.2,<0.22.0" },
     { name = "jinja2", specifier = ">=2.10,<4.0" },
     { name = "pre-commit", specifier = ">=4.0.1,<5" },
     { name = "typed-ast", marker = "python_full_version < '3.8'", specifier = ">=1.5.5,<2" },
@@ -158,11 +158,11 @@ requires-dist = [
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "black", specifier = "~=24.4" },
-    { name = "isort", specifier = "~=6.0" },
-    { name = "pillow", specifier = "~=11.0" },
-    { name = "pylint", specifier = "~=3.3" },
-    { name = "pytest", specifier = "~=8.3" },
+    { name = "black", specifier = ">=24.4,<27.0" },
+    { name = "isort", specifier = ">=6,<9" },
+    { name = "pillow", specifier = ">=11,<13" },
+    { name = "pylint", specifier = ">=3.3,<5.0" },
+    { name = "pytest", specifier = ">=8.3,<10.0" },
     { name = "rope", specifier = "~=1.13" },
 ]
 
