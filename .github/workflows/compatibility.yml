@@ -1,0 +1,61 @@
+name: Compatibility
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/compatibility.yml"
+      - "pyproject.toml"
+      - "uv.lock"
+      - "diagrams/**"
+      - "resources/**"
+      - "scripts/compatibility/**"
+      - "tests/compatibility/**"
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/compatibility.yml"
+      - "pyproject.toml"
+      - "uv.lock"
+      - "diagrams/**"
+      - "resources/**"
+      - "scripts/compatibility/**"
+      - "tests/compatibility/**"
+
+jobs:
+  compare-upstream:
+    name: Compare upstream 0.25.1 to candidate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v5
+      - name: Setup Graphviz
+        uses: ts-graphviz/setup-graphviz@v2
+      - name: Render and compare manifests
+        run: |
+          set -euo pipefail
+          repo_dir="$PWD"
+          compat_dir="$RUNNER_TEMP/compatibility"
+          mkdir -p "$compat_dir"
+          python -m venv "$compat_dir/.venv-upstream"
+          "$compat_dir/.venv-upstream/bin/python" -m pip install --upgrade pip
+          "$compat_dir/.venv-upstream/bin/python" -m pip install diagrams==0.25.1 pillow
+          uv sync --all-groups --frozen
+          cd "$compat_dir"
+          "$compat_dir/.venv-upstream/bin/python" "$repo_dir/scripts/compatibility/render.py" "$compat_dir/baseline"
+          "$repo_dir/.venv/bin/python" "$repo_dir/scripts/compatibility/render.py" "$compat_dir/candidate"
+          "$repo_dir/.venv/bin/python" "$repo_dir/scripts/compatibility/compare.py" "$compat_dir/baseline/manifest.json" "$compat_dir/candidate/manifest.json"
+      - name: Upload manifests
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: compatibility-manifests
+          path: |
+            ${{ runner.temp }}/compatibility/baseline/manifest.json
+            ${{ runner.temp }}/compatibility/candidate/manifest.json

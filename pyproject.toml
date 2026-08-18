@@ -29,6 +29,7 @@ Upstream = "https://github.com/mingrammer/diagrams"
 [dependency-groups]
 dev = [
     "pytest~=8.3",
+    "pillow~=11.0",
     "pylint~=3.3",
     "rope~=1.13",
     "isort~=6.0",
