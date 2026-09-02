@@ -50,3 +50,20 @@ when the original code came from upstream.
 Runtime services should consume this repository from a public Git tag with a
 frozen lockfile. A failed Git fetch during a new build should fail the build,
 not fall back to PyPI.
+
+## Consumer Compatibility
+
+- Diagram Service may emit only public `diagrams` imports supported by the
+  selected release.
+- Generate Service resolves the public Git tag to an exact commit in `uv.lock`,
+  builds it into the container image, and has no runtime dependency on GitHub.
+- Consumer HTTP contracts, `.df` conversion ownership, and subprocess isolation
+  remain outside this library.
+- Verify the library import/resource corpus, Diagram Service node-registry
+  imports, and Generate Service PNG/JPG/SVG execution before adopting a new
+  release.
+
+If a build cannot resolve the immutable Git source, stop the build and retain
+the last verified container image. If a rendering regression appears after
+deployment, roll back the consumer image and release a new semantic version;
+never move an existing tag.
