@@ -11,6 +11,10 @@ package. The initial release, `v1.0.0`, is a compatibility release based on
 `mingrammer/diagrams v0.25.1`; see [UPSTREAM.md](UPSTREAM.md) for exact
 provenance and attribution.
 
+Maintainers should start at the [documentation router](/docs/README.md) for
+current compatibility, development, release, migration, and ownership
+contracts.
+
 **Diagram as Code**.
 
 Diagrams lets you draw the cloud system architecture **in Python code**. It was born for **prototyping** a new system architecture design without any design tools. You can also describe or visualize the existing system architecture as well. Diagrams currently supports main major providers including: `AWS`, `Azure`, `GCP`, `Kubernetes`, `Alibaba Cloud`, `Oracle Cloud` etc... It also supports `On-Premises` nodes, `SaaS` and major `Programming` frameworks and languages.

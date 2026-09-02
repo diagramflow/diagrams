@@ -4,6 +4,10 @@ This repository contains DiagramFlow's public `diagrams` distribution. It keeps
 the package name and Python namespace `diagrams` while using an independent
 DiagramFlow release lifecycle.
 
+Start documentation discovery at [Documentation](/docs/README.md). That router
+separates current compatibility and maintenance contracts from historical
+release evidence and upstream provenance.
+
 ## Scope
 
 - Preserve the public API, provider modules, resource layout, and rendering
@@ -31,6 +35,9 @@ Graphviz must be installed and available on `PATH` for rendering tests.
 - Release tags are immutable. Never move or replace a published `v*` tag.
 - Fixes after `v1.0.0` must use a new version and a new tag.
 - Runtime consumers should install from a Git tag and frozen lockfile, not PyPI.
+- Record current policy in [Maintenance](/docs/maintenance.md), release history
+  in [Releases](/docs/releases/README.md), and compatibility-impacting upgrade
+  guidance in [Migrations](/docs/migrations/README.md).
 
 ## Security
 
