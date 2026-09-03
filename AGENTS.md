@@ -1,46 +1,48 @@
-# AGENTS
+# diagrams Maintainer Guide
 
-This repository contains DiagramFlow's public `diagrams` distribution. It keeps
-the package name and Python namespace `diagrams` while using an independent
-DiagramFlow release lifecycle.
+## Purpose And Boundaries
 
-Start documentation discovery at [Documentation](/docs/README.md). That router
-separates current compatibility and maintenance contracts from historical
-release evidence and upstream provenance.
+This repository owns DiagramFlow's public `diagrams` Python distribution. It
+preserves the `diagrams` package name, provider modules, resource layout, and
+rendering behavior while using an independent DiagramFlow release lifecycle.
 
-## Scope
+Keep the library general purpose. Do not import DiagramFlow application code,
+publish to PyPI or private indexes, or configure automatic synchronization with
+`mingrammer/diagrams`.
 
-- Preserve the public API, provider modules, resource layout, and rendering
-  behavior unless a new compatibility-reviewed release intentionally changes
-  them.
-- Keep the library general purpose. Do not import DiagramFlow application code.
-- Do not publish this package to PyPI or private package indexes.
-- Do not configure automatic synchronization with `mingrammer/diagrams`.
+## Required Context
 
-## Development
+Start at [Documentation](/diagrams/docs/README.md), then use:
 
-Install dependencies and run tests with uv:
+- [Maintenance Contract](/diagrams/docs/maintenance.md) for compatibility and release policy.
+- [Upstream Provenance](/diagrams/UPSTREAM.md) for snapshot history and attribution.
+- [Releases](/diagrams/docs/releases/README.md) for release evidence.
+- [Migrations](/diagrams/docs/migrations/README.md) for compatibility-impacting upgrades.
+
+## Commands
+
+Graphviz must be installed and available on `PATH`.
 
 ```bash
 uv sync --all-groups
 uv run pytest
 ```
 
-Graphviz must be installed and available on `PATH` for rendering tests.
+## Compatibility And Release Guardrails
 
-## Release Policy
+- Preserve public APIs, provider modules, resource paths, and rendering output
+  unless a compatibility-reviewed release intentionally changes them.
+- Use Semantic Versioning. Release tags are immutable; never move or replace a
+  published `v*` tag.
+- Runtime consumers install from a Git tag and frozen lockfile, not PyPI.
+- Python 3.11 tests and compatibility gates are the release baseline even when
+  package metadata supports a wider interpreter range.
+- Patch security issues in this repository, run the full compatibility suite,
+  and publish a new semantic version. Do not assume upstream will apply fixes.
 
-- Use Semantic Versioning.
-- The Python 3.11 test and compatibility gates are the release baseline.
-- Release tags are immutable. Never move or replace a published `v*` tag.
-- Fixes after `v1.0.0` must use a new version and a new tag.
-- Runtime consumers should install from a Git tag and frozen lockfile, not PyPI.
-- Record current policy in [Maintenance](/docs/maintenance.md), release history
-  in [Releases](/docs/releases/README.md), and compatibility-impacting upgrade
-  guidance in [Migrations](/docs/migrations/README.md).
+## Verification
 
-## Security
-
-DiagramFlow owns security triage for this distribution after the snapshot. Patch
-security issues in this repository, run the full compatibility suite, and cut a
-new semantic version. Do not assume upstream will provide or apply fixes here.
+Inspect affected provider imports, resources, tests, release docs, and consumers
+before changing compatibility behavior. Run focused tests first, then
+`uv run pytest`. Update maintenance, migration, release, and provenance docs
+only when their owned contract changes; preserve unrelated work.
