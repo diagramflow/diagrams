@@ -159,7 +159,7 @@ requires-dist = [
 [package.metadata.requires-dev]
 dev = [
     { name = "black", specifier = ">=24.4,<27.0" },
-    { name = "isort", specifier = ">=6,<9" },
+    { name = "isort", specifier = ">=6,<10" },
     { name = "pillow", specifier = ">=11,<13" },
     { name = "pylint", specifier = ">=3.3,<5.0" },
     { name = "pytest", specifier = ">=8.3,<10.0" },
